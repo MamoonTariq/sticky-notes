@@ -1,107 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Sticky Notes</title>
     <style>
-        div#dis_all_notes {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+      div#dis_all_notes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
 
-        .single-note {
-            width: 25%;
-            text-align: center;
-            border: 1px solid gainsboro;
-            margin-top: 30px;
-            padding-bottom: 20px;
-        }
+      .single-note {
+        width: 25%;
+        text-align: center;
+        border: 1px solid gainsboro;
+        margin-top: 30px;
+        padding-bottom: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="form">
-        <textarea name="sticky_text" id="sticky_text" cols="30" rows="10"></textarea>
-        <button id="submit">Add Notes</button>
+      <textarea
+        name="sticky_text"
+        id="sticky_text"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <button id="submit">Add Notes</button>
     </div>
     <div class="searchbox">
-        <input type="search" name="search" id="search" placeholder="Search">
+      <input type="search" name="search" id="search" placeholder="Search" />
     </div>
     <div id="dis_all_notes"></div>
 
-<script>
-    let add_btn = document.getElementById('submit');
-    add_btn.addEventListener('click',function(){    
-    let sticky_text = document.getElementById('sticky_text');
-    let sticky_notes = localStorage.getItem('sticky_notes');
-    if(sticky_notes == null){
-        sticky_arr = [];
-    } else{
-        sticky_arr = JSON.parse(sticky_notes);
-    }
-    sticky_arr.push(sticky_text.value);
-    localStorage.setItem("sticky_notes" ,JSON.stringify(sticky_arr) );
-    sticky_text.value = '';
-    display_notes();
-    });
-
-    function display_notes(){
-        let sticky_notes = localStorage.getItem("sticky_notes");
-        if(sticky_notes == null){
-            sticky_arr = [];
-        } else{
-            sticky_arr = JSON.parse(sticky_notes);
-        }
-        let content = '';
-        sticky_arr.forEach(function(element, index){
-        content += 
-                `<div class="single-note">
-                    <h5>${index + 1}</h5>
-                    <p>${element}</p>
-                    <button id="${index}" onclick="delete_note(this.id)">Delete</button>
-                </div>`;
-        });
-        let notes_el = document.getElementById('dis_all_notes');
-        if (sticky_arr.length != 0) {
-            notes_el.innerHTML = content;
-        } else{
-            notes_el.innerHTML = `No notes found`;
-        }
-    }
-    function delete_note(index){
-        //console.log(index);
-        let sticky_notes = localStorage.getItem("sticky_notes");
-        if(sticky_notes == null){
-            sticky_arr = [];
-        } else{
-            sticky_arr = JSON.parse(sticky_notes);
-        }
-        sticky_arr.splice(index, 1);
-        localStorage.setItem("sticky_notes" ,JSON.stringify(sticky_arr) );
-        display_notes();
-    }
-
-    display_notes();
-
-
-    // Search Functionlaity;
-    let search = document.getElementById('search');
-    search.addEventListener('input',function(){
-        let search_val = search.value.toLowerCase();
-        // console.log(search_val);
-        let all_note = document.getElementsByClassName('single-note');
-        Array.from(all_note).forEach(function(element, index){
-            let cardtext  = element.getElementsByTagName("p")[0].innerText;
-            //console.log(cardtext);
-            if (cardtext.includes(search_val)) {
-                element.style.display = "block";
-            } else {
-                element.style.display = "none";
-            }
-        });
-    });
-</script>
-</body>
+    <script src="./index.js"></script>
+  </body>
 </html>
